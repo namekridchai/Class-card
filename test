@@ -1,0 +1,50 @@
+class Card:
+    def __init__(self, value, suit):
+        self.value = value
+        self.suit = suit
+        self.score = 0
+        if value =='J':
+            self.Rvalue = 11
+        elif value == 'Q':
+            self.Rvalue = 12
+        elif value == 'K':
+            self.Rvalue = 13
+        elif value == 'A':
+            self.Rvalue = 14
+        elif value == '2':
+            self.Rvalue = 15
+        else:
+            self.Rvalue = int(value)
+    def __str__(self):
+        return str(self.value)+' '+str(self.suit)
+    def getScore(self):
+        if self.value == 'A':
+            self.score+=1
+        elif self.value in 'JQK':
+            self.score+=10
+        else:
+            self.score+=int(self.value)
+        return self.score    
+
+    def sum(self, other):
+        return (self.score + other.score)%10
+    
+    def __lt__(self, rhs):
+        if self.Rvalue!=rhs.Rvalue:
+            return self.Rvalue < rhs.Rvalue
+        else:
+            return self.suit < rhs.suit
+n = int(input())
+cards = []
+for i in range(n):
+    value, suit = input().split()
+    cards.append(Card(value, suit))
+for i in range(n):
+    print(cards[i].getScore())
+print("----------")
+for i in range(n-1):
+    print(Card.sum(cards[i], cards[i+1]))
+print("----------")
+cards.sort()
+for i in range(n):
+    print(cards[i])
